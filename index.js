@@ -22,26 +22,26 @@ bot.on('ready', () => {
 });
 
 bot.on('interactionCreate', async i => {
-    if (!i.isChatInputCommand()) return;
+   if (!i.isChatInputCommand()) return;
 
-    const command = bot.commands.get(interaction.commandName);
-	if (!command) return;
+   const command = bot.commands.get(interaction.commandName);
+   if (!command) return;
 
     if (command.ownerOnly) {
         await interaction.reply({ content: 'this command is only for owners.', ephemeral: true });
         return
     }
     
-	try {
-		await command.run(interaction);
-	} catch (error) {
-		console.error(error);
-		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: 'there was an error while executing this command.', ephemeral: true });
-		} else {
-			await interaction.reply({ content: 'there was an error while executing this command.', ephemeral: true });
-		}
+    try {
+	await command.run(interaction);
+    } catch (error) {
+	console.error(error);
+	if (interaction.replied || interaction.deferred) {
+	   await interaction.followUp({ content: 'there was an error while executing this command.', ephemeral: true });
+	} else {
+	   await interaction.reply({ content: 'there was an error while executing this command.', ephemeral: true });
 	}
+   }
 });
 
 bot.login(process.env.DISCORD_TOKEN)
